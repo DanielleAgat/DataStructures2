@@ -52,7 +52,7 @@ namespace DataQ2{
             min = _right;
             //Swap values if necessary and continue fixing the heap towards the leaves:
             if(min != nodeIndex){
-                swap(data[nodeIndex],data[min]); //TODO: The swap function is unknown, need to implement one by our own.
+                swap(&data[nodeIndex],&data[min]); //TODO: The swap function is unknown, need to implement one by our own.
                 fixHeap(min);
             }
         }
@@ -86,6 +86,12 @@ namespace DataQ2{
         data[i] = item;
     }
 
+
+    void MinHeap::swap(Pair* x, Pair* y){
+        Pair temp = *x;
+        *x = *y;
+        *y = temp;
+    }
 
 
 
