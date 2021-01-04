@@ -1,21 +1,22 @@
-//
-// Created by Aviv Nevelev on 21/12/2020.
-//
+//Student Name: Danielle Agat Levi
+//Student ID: 313357329
+//Student Name: Aviv Nevelev
+//Student ID: 206026429
 
 #include "BinarySearchTree.h"
 namespace DataQ2 {
-    NODE::NODE():right(nullptr),left(nullptr) {
+    BinSearchNode::BinSearchNode(): right(nullptr), left(nullptr) {
         data.frequency=-1;
         data.key=0;
     }
-    NODE::NODE(NODE *_right,NODE *_left,Pair _data):right(_right),left(_left){
+    BinSearchNode::BinSearchNode(BinSearchNode *_right, BinSearchNode *_left, Pair _data): right(_right), left(_left){
         data.frequency=_data.frequency;
         data.key=_data.key;
     }
-    NODE::~NODE() {}
+    BinSearchNode::~BinSearchNode() {}
     BinarySearchTree::BinarySearchTree():root(nullptr){}
     BinarySearchTree::~BinarySearchTree(){makeEmpty(root);}
-    void BinarySearchTree::makeEmpty(NODE *t) {
+    void BinarySearchTree::makeEmpty(BinSearchNode *t) {
         if (t == nullptr)
             return;
         {
@@ -25,9 +26,9 @@ namespace DataQ2 {
         }
     }
 
-    NODE *BinarySearchTree::insert(Pair x, NODE *t) {
+    BinSearchNode* BinarySearchTree::insert(Pair x, BinSearchNode* t) {
         if (t == nullptr) {
-            t=new NODE(nullptr, nullptr,x);
+            t = new BinSearchNode(nullptr, nullptr, x);
         } else if (x.key < t->data.key)
             t->left = insert(x, t->left);
         else if (x.key > t->data.key)
@@ -35,7 +36,7 @@ namespace DataQ2 {
         return t;
     }
 
-    NODE *BinarySearchTree::findMin(NODE *t) {
+    BinSearchNode* BinarySearchTree::findMin(BinSearchNode *t) {
         if (t == nullptr)
             return nullptr;
         else if (t->left == nullptr)
@@ -44,7 +45,7 @@ namespace DataQ2 {
             return findMin(t->left);
     }
 
-    NODE *BinarySearchTree::findMax(NODE *t) {
+    BinSearchNode* BinarySearchTree::findMax(BinSearchNode *t) {
         if (t == nullptr)
             return nullptr;
         else if (t->right == nullptr)
@@ -53,8 +54,8 @@ namespace DataQ2 {
             return findMax(t->right);
     }
 
-    NODE *BinarySearchTree::remove(Pair x, NODE *t) {
-        NODE *temp;
+    BinSearchNode* BinarySearchTree::remove(Pair x, BinSearchNode *t) {
+        BinSearchNode *temp;
         if(t == nullptr)
             return nullptr;
         else if(x.key < t->data.key)
@@ -77,16 +78,8 @@ namespace DataQ2 {
 
         return t;
     }
-    /*
-    const NODE& NODE::operator=(const NODE& node){
-        data.key=node.data.key;
-        data.frequency=node.data.frequency;
-        right=node.right;
-        left=node.left;
-        return *this;
-    }
-     */
-    void BinarySearchTree::inorder(NODE *t) {
+
+    void BinarySearchTree::inorder(BinSearchNode *t) {
         if (t == nullptr)
             return;
         inorder(t->left);
@@ -94,7 +87,7 @@ namespace DataQ2 {
         inorder(t->right);
     }
 
-    NODE *BinarySearchTree::find(NODE *t, Pair x) {
+    BinSearchNode* BinarySearchTree::find(BinSearchNode *t, Pair x) {
         if (t == nullptr)
             return nullptr;
         else if (x.key < t->data.key)
@@ -103,5 +96,21 @@ namespace DataQ2 {
             return find(t->right, x);
         else
             return t;
+    }
+
+    void BinarySearchTree::insert(Pair x) {
+        root = insert(x, root);
+    }
+    void BinarySearchTree::remove(Pair x) {
+        root = remove(x, root);
+    }
+
+    void BinarySearchTree::display(){
+        inorder(root);
+        cout << endl;
+    }
+
+    BinSearchNode* BinarySearchTree::find(Pair x) {
+        return find(root, x);
     }
 }

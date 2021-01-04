@@ -1,7 +1,11 @@
-//
-// Created by Aviv Nevelev on 06/12/2020.
-//
+//Student Name: Danielle Agat Levi
+//Student ID: 313357329
+//Student Name: Aviv Nevelev
+//Student ID: 206026429
+
 #include "BinarySearchTree.h"
+#include "BinaryTree.h"
+
 using namespace DataQ2;
 int main(){
     BinarySearchTree t;
@@ -37,5 +41,29 @@ int main(){
     t.display();
     t.remove(x3);
     t.display();
+
+
+
+    //btree tree;
+    btree *tree = new btree();
+
+    tree->insert('e');
+    tree->insert('b');
+    tree->insert('A');
+    tree->insert('c');
+    tree->insert('a');
+    tree->insert('T');
+    tree->insert('Z');
+    tree->insert('f');
+    tree->insert('0');
+    tree->insert('W');
+
+    tree->preorder_print();
+    tree->inorder_print();
+    tree->postorder_print();
+
+    delete tree;
+
+
     return 0;
 }
