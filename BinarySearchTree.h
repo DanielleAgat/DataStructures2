@@ -13,6 +13,7 @@ namespace DataQ2 {
     }Pair;
     class BinSearchNode {
         friend class BinarySearchTree;
+        friend class MinHeap;
     private:
         Pair data;
         BinSearchNode* left;
@@ -23,26 +24,33 @@ namespace DataQ2 {
         ~BinSearchNode();
     };
     class BinarySearchTree {
+        friend class MinHeap;
     private:
         BinSearchNode* root;
+        int logSize;
 
         ///Inner methods:
         void makeEmpty(BinSearchNode* t);
-        BinSearchNode* insert(Pair x, BinSearchNode* t);
+        BinSearchNode* insert(char _key, BinSearchNode* t);
         BinSearchNode* findMin(BinSearchNode* t);
         BinSearchNode* findMax(BinSearchNode* t);
         BinSearchNode* remove(Pair x, BinSearchNode* t);
         void inorder(BinSearchNode* t);
-        BinSearchNode* find(BinSearchNode* t, Pair x);
+        BinSearchNode* find(BinSearchNode* t, char x);
     public:
         ///Constructors & Destructors:
         BinarySearchTree();
         ~BinarySearchTree();
 
+        ///Getters & Setters:
+        int getBinSearchTreeSize() const { return logSize; };
+
+
         ///Methods:
-        void insert(Pair x);
+        void insert(char x);
+        BinSearchNode* getRoot(){ return root; };
         void remove(Pair x);
         void display();
-        BinSearchNode* find(Pair x);
+        BinSearchNode* find(char x);
     };
 }

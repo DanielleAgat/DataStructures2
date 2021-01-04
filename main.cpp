@@ -3,67 +3,71 @@
 //Student Name: Aviv Nevelev
 //Student ID: 206026429
 
+#include <iostream>
+#include <fstream>
+#include "HoffmanTree.h"
+#include "MinHeap.h"
 #include "BinarySearchTree.h"
-#include "BinaryTree.h"
 
+using namespace std;
 using namespace DataQ2;
+
+void readFile(string fileName, BinarySearchTree& BinarySearchTree);
+
 int main(){
-    BinarySearchTree t;
-    Pair x1;
-    x1.key='a';
-    x1.frequency=20;
+    BinarySearchTree BinarySearchTree;
+    string fileName;
 
-    Pair x2;
-    x2.key='b';
-    x2.frequency=25;
+    cout<<"please enter file name: "; cin>> fileName;
+    readFile(fileName, BinarySearchTree);
+    MinHeap minHeap(BinarySearchTree, BinarySearchTree.getBinSearchTreeSize() );
+    HoffmanTree* hoffmanTree = minHeap.buildHoffmanTree();
 
-    Pair x3;
-    x3.key='c';
-    x3.frequency=40;
-
-    Pair x4;
-    x4.key='d';
-    x4.frequency=30;
-
-    Pair x5;
-    x5.key='e';
-    x5.frequency=35;
-
-    t.insert(x1);
-    t.insert(x2);
-    t.insert(x3);
-    t.insert(x4);
-    t.insert(x5);
-    t.display();
-    t.remove(x1);
-    t.display();
-    t.remove(x2);
-    t.display();
-    t.remove(x3);
-    t.display();
-
-
-
-    //btree tree;
-    btree *tree = new btree();
-
-    tree->insert('e');
-    tree->insert('b');
-    tree->insert('A');
-    tree->insert('c');
-    tree->insert('a');
-    tree->insert('T');
-    tree->insert('Z');
-    tree->insert('f');
-    tree->insert('0');
-    tree->insert('W');
-
-    tree->preorder_print();
-    tree->inorder_print();
-    tree->postorder_print();
-
-    delete tree;
-
-
-    return 0;
+    hoffmanTree->printHoffmanTree();
+    cout<<endl;
 }
+
+void readFile(string fileName, BinarySearchTree& BinarySearchTree) {
+    char currC;
+    ifstream infile(fileName);
+
+    if (!infile) {
+        cout << "Error with infile" << endl;
+        exit(-1);
+    }
+
+    infile.get(currC);
+    while (!infile.eof()) {
+        if (infile.eof()) {
+            cout << "Error reading" << endl;
+            exit(-1);
+        }
+        BinarySearchTree.insert(currC); //TODO: Consider search the char in the tree, and if find then insert to the returned node, else insert
+        infile.get(currC);
+    }
+    infile.close();
+
+
+
+//    char currC;
+//    ifstream infile(fileName);
+//
+//    if (!infile) {
+//        cout << "Error with infile" << endl;
+//        exit(-1);
+//    }
+//
+//    infile.get(currC);
+//    while (!infile.eof()) {
+//        if (infile.eof()) {
+//            cout << "Error reading" << endl;
+//            exit(-1);
+//        }
+//        BinarySearchTree.insert(currC); //TODO: Consider search the char in the tree, and if find then insert to the returned node, else insert
+//        infile.get(currC);
+//    }
+//    infile.close();
+
+}
+
+   

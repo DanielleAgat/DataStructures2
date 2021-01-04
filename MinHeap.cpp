@@ -8,14 +8,17 @@
 namespace DataQ2{
     MinHeap::MinHeap(int _phySize){
         phySize = _phySize;
-        data = new Pair[phySize];
+        heapData = new HoffmanTree[phySize];
         logSize = 0;
         isAllocated = true;
     }
+    MinHeap::MinHeap(BinarySearchTree &BinarySearchTree, int size) :MinHeap(size){
+        makeHeap(BinarySearchTree.root);
+    }
 
-    MinHeap::MinHeap(Pair arr[],int size) {
+    MinHeap::MinHeap(HoffmanTree arr[],int size) {
         logSize = phySize = size;
-        data = arr;
+        heapData = arr;
         isAllocated = false;
 
         for(int i = size/2-1 ; i >= 0 ; i--)
@@ -24,8 +27,8 @@ namespace DataQ2{
 
     MinHeap::~MinHeap(){
         if(isAllocated)
-            delete[] data;
-        data = nullptr;
+            delete[] heapData;
+        heapData = nullptr;
     }
 
     int MinHeap::left(int nodeIndex){
@@ -43,56 +46,80 @@ namespace DataQ2{
         int _left = left(nodeIndex);
         int _right = right(nodeIndex);
 
-        if((_left < logSize) && (data[_left].frequency < data[nodeIndex].frequency)){
+        if((_left < logSize) && (heapData[_left].getRootKey() < heapData[nodeIndex].getRootKey())){
             min = _left;
         }else{
             min = nodeIndex;
         }
-        if((_right < logSize) && (data[_right].frequency < data[min].frequency)){
+        if((_right < logSize) && (heapData[_right].getRootKey() < heapData[min].getRootKey())){
             min = _right;
             //Swap values if necessary and continue fixing the heap towards the leaves:
             if(min != nodeIndex){
-                swap(&data[nodeIndex],&data[min]); //TODO: The swap function is unknown, need to implement one by our own.
+                swap(&heapData[nodeIndex], &heapData[min]);
                 fixHeap(min);
             }
         }
     }
 
-    Pair MinHeap::deleteMin() {
+    HoffmanTree* MinHeap::deleteMin() {
         if(logSize < 1){
-            cout << "There is no data left in the heap. There is no min value to delete." << endl;
+            cout << "There is no heapData left in the heap. There is no min value to delete." << endl;
             exit(1);
         }else{
-            Pair min = data[0];
+            HoffmanTree* min = heapData;
             logSize--;
-            data[0] = data[logSize];
+            heapData[0] = heapData[logSize];
             fixHeap(0);
-            return (min);
+            return min;
         }
     }
 
-    void MinHeap::insert(Pair item) {
+    void MinHeap::insert(HoffmanTree item) {
         if(logSize == phySize){
-            cout << "Heap is full! Cannot add data anymore" << endl;
+            cout << "Heap is full! Cannot add heapData anymore" << endl;
             exit(1);
         }
         int i = logSize;
         logSize++;
 
-        while((i > 0) && (data[parent(i)].frequency > item.frequency)){
-            data[i] = data[parent(i)];
+        while((i > 0) && (heapData[parent(i)].getRootKey() > item.getRootKey())){
+            heapData[i] = heapData[parent(i)];
             i = parent(i);
         }
-        data[i] = item;
+        heapData[i] = item;
     }
 
+    void MinHeap::makeHeap(BinSearchNode* node){
+        if (!node)
+            return;
+        makeHeap(node->left);
+        HoffmanTree HoffmanTree;
+        HoffmanTree.insert(node->data.frequency, node->data.key);
+        insert(HoffmanTree);
+        makeHeap(node->right);
+    }
 
-    void MinHeap::swap(Pair* x, Pair* y){
-        Pair temp = *x;
+    HoffmanTree* MinHeap::buildHoffmanTree(){
+        HoffmanTree* hoffmanTree;
+        if(logSize == 1)
+            hoffmanTree = deleteMin();
+        else{
+            while(logSize>1){
+                HoffmanTree* t1 = deleteMin();
+                HoffmanTree* t2 = deleteMin();
+                HoffmanTree* t3 = new HoffmanTree();
+                t3->addSons(*t1, *t2);
+                insert(*t3);
+            }
+            hoffmanTree = deleteMin();
+        }
+        return hoffmanTree;
+    }
+
+    void swap(HoffmanTree* x, HoffmanTree* y){
+        HoffmanTree temp = *x;
         *x = *y;
         *y = temp;
     }
-
-
 
 }

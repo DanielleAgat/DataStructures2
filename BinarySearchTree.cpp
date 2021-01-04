@@ -14,26 +14,64 @@ namespace DataQ2 {
         data.key=_data.key;
     }
     BinSearchNode::~BinSearchNode() {}
-    BinarySearchTree::BinarySearchTree():root(nullptr){}
-    BinarySearchTree::~BinarySearchTree(){makeEmpty(root);}
+
+    BinarySearchTree::BinarySearchTree():root(nullptr),logSize(0){
+    }
+
+    BinarySearchTree::~BinarySearchTree(){
+        makeEmpty(root);
+    }
+
     void BinarySearchTree::makeEmpty(BinSearchNode *t) {
         if (t == nullptr)
             return;
-        {
-            makeEmpty(t->left);
-            makeEmpty(t->right);
-            delete t;
-        }
+
+        makeEmpty(t->left);
+        makeEmpty(t->right);
+        delete t;
+        logSize=0;
     }
 
-    BinSearchNode* BinarySearchTree::insert(Pair x, BinSearchNode* t) {
-        if (t == nullptr) {
-            t = new BinSearchNode(nullptr, nullptr, x);
-        } else if (x.key < t->data.key)
-            t->left = insert(x, t->left);
-        else if (x.key > t->data.key)
-            t->right = insert(x, t->right);
-        return t;
+    BinSearchNode* BinarySearchTree::insert(char _key, BinSearchNode* t) {
+//        if (t == nullptr) { TODO
+//            t = new BinSearchNode(nullptr, nullptr, x);
+//        } else if (x.key < t->data.key)
+//            t->left = insert(x, t->left);
+//        else if (x.key > t->data.key)
+//            t->right = insert(x, t->right);
+//        return t;
+
+
+        //TreeNode* temp = root;TODO: Dor's comment
+        BinSearchNode* parent = nullptr;
+        BinSearchNode* newNode;
+
+        BinSearchNode* temp = find(parent,_key);
+        if (temp)
+            (temp->data.key)++;
+        else {
+            temp = root;
+            while (temp) {
+                parent = temp;
+                if (_key > temp->data.key)
+                    temp = temp->right;
+                else
+                    temp = temp->left;
+            }
+
+            newNode = new BinSearchNode();
+            newNode->data.key = _key;
+            newNode->data.key = 1;
+
+            if (!parent)
+                root = newNode;
+            else if (_key > parent->data.key)
+                parent->right = newNode;
+            else
+                parent->left = newNode;
+
+            logSize++;
+        }
     }
 
     BinSearchNode* BinarySearchTree::findMin(BinSearchNode *t) {
@@ -87,22 +125,24 @@ namespace DataQ2 {
         inorder(t->right);
     }
 
-    BinSearchNode* BinarySearchTree::find(BinSearchNode *t, Pair x) {
+    BinSearchNode* BinarySearchTree::find(BinSearchNode *t, char x) {
         if (t == nullptr)
             return nullptr;
-        else if (x.key < t->data.key)
+        else if (x < t->data.key)
             return find(t->left, x);
-        else if (x.key > t->data.key)
+        else if (x > t->data.key)
             return find(t->right, x);
         else
             return t;
     }
 
-    void BinarySearchTree::insert(Pair x) {
+    void BinarySearchTree::insert(char x) {
         root = insert(x, root);
+        logSize++;
     }
     void BinarySearchTree::remove(Pair x) {
         root = remove(x, root);
+        logSize--;
     }
 
     void BinarySearchTree::display(){
@@ -110,7 +150,7 @@ namespace DataQ2 {
         cout << endl;
     }
 
-    BinSearchNode* BinarySearchTree::find(Pair x) {
+    BinSearchNode* BinarySearchTree::find(char x) {
         return find(root, x);
     }
 }

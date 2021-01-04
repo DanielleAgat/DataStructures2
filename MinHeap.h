@@ -4,11 +4,11 @@
 //Student ID: 206026429
 #pragma once
 #include "BinarySearchTree.h"
-
+#include "HoffmanTree.h"
 namespace DataQ2{
     class MinHeap{
     private:
-        Pair* data;
+        HoffmanTree* heapData;
         int phySize;
         int logSize;
         bool isAllocated; // 'true' if heap allocated memory ; 'false' otherwise.
@@ -22,13 +22,17 @@ namespace DataQ2{
     public:
         ///Constructors & Destructors:
         MinHeap(int _phySize); //Allocate memory for the heap and make the heap empty.
-        MinHeap(Pair arr[],int size); //turns arr of frequencies and chars into min heap.
+        MinHeap(HoffmanTree arr[],int size); //turns arr of frequencies and chars into min heap.
+        MinHeap(BinarySearchTree& BinarySearchTree,int size); //turns arr of frequencies and chars into min heap.
         ~MinHeap();
 
         ///Methods:
-        Pair min();
-        Pair deleteMin();
-        void insert(Pair item);
-        void swap(Pair* x, Pair* y)
+        HoffmanTree min();
+        HoffmanTree* deleteMin();
+        void insert(HoffmanTree item);
+        void makeHeap(BinSearchNode* node);
+        HoffmanTree* buildHoffmanTree();
     };
+
+    void swap(HoffmanTree* x, HoffmanTree* y);
 }
