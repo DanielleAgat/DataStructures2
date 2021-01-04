@@ -29,6 +29,6 @@ namespace DataQ2{
         Pair min();
         Pair deleteMin();
         void insert(Pair item);
-        void swap(Pair* x, Pair* y);
+        void swap(Pair* x, Pair* y)
     };
 }
