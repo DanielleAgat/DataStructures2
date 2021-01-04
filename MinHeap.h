@@ -23,7 +23,7 @@ namespace DataQ2{
         ///Constructors & Destructors:
         MinHeap(int _phySize); //Allocate memory for the heap and make the heap empty.
         MinHeap(HoffmanTree arr[],int size); //turns arr of frequencies and chars into min heap.
-        MinHeap(BinarySearchTree& BinarySearchTree,int size); //turns arr of frequencies and chars into min heap.
+        MinHeap(BinarySearchTree& BinarySearchTree); //turns binarySearchTree into min heap.
         ~MinHeap();
 
         ///Methods:
@@ -34,5 +34,5 @@ namespace DataQ2{
         HoffmanTree* buildHoffmanTree();
     };
 
-    void swap(HoffmanTree* x, HoffmanTree* y);
+    void swap(HoffmanTree& x, HoffmanTree& y);
 }

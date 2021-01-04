@@ -55,10 +55,11 @@ namespace DataQ2{
 
     void HoffmanTree::insert(float key, char _data){
         if(root != nullptr){
-            insert(key,_data, root);
+            insert(key,_data,root);
         }else{
             root = new HoffTreeNode;
             root->data = _data;
+            root->frequency = key;
             root->left = nullptr;
             root->right = nullptr;
         }
@@ -140,22 +141,20 @@ namespace DataQ2{
             s.append("1");
 
         _hoffman(root, s, count);
-        cout<<"the weight of the tree is: "<<count;
+        cout<<"\nthe weight of the tree is: "<<count;
     }
 
 
     void HoffmanTree::_hoffman(HoffTreeNode* root, string s, float& count)const{
-        if(root->right == nullptr && root->left == nullptr){
-            cout<<endl;
-            cout<<"'"<<root->data<<"':"<< s;
-            count += ((s.length())*root->frequency);
-        }else{
-            //TODO: check if count +=2;
+        if(root->right != nullptr && root->left != nullptr){
             string s1,s2;
             s1.assign(s);
             s2.assign(s);
-            _hoffman(root->right, s2.append("1"), count);
             _hoffman(root->left, s1.append("0"), count);
+            _hoffman(root->right, s2.append("1"), count);
+        }else{
+            cout<<"\n'"<<root->data<<"':"<< s;
+            count += ((s.length())*root->frequency);
         }
     }
 

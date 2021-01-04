@@ -12,7 +12,7 @@ namespace DataQ2{
         logSize = 0;
         isAllocated = true;
     }
-    MinHeap::MinHeap(BinarySearchTree &BinarySearchTree, int size) :MinHeap(size){
+    MinHeap::MinHeap(BinarySearchTree &BinarySearchTree) :MinHeap(BinarySearchTree.getBinSearchTreeSize()){
         makeHeap(BinarySearchTree.root);
     }
 
@@ -41,23 +41,22 @@ namespace DataQ2{
         return (nodeIndex-1)/2;
     }
 
-    void MinHeap::fixHeap(int nodeIndex){
+    void MinHeap::fixHeap(int nodeIndex) {
         int min;
         int _left = left(nodeIndex);
         int _right = right(nodeIndex);
 
-        if((_left < logSize) && (heapData[_left].getRootKey() < heapData[nodeIndex].getRootKey())){
+        if ((_left < logSize) && (heapData[_left].getRootKey() < heapData[nodeIndex].getRootKey())) {
             min = _left;
-        }else{
+        } else {
             min = nodeIndex;
         }
-        if((_right < logSize) && (heapData[_right].getRootKey() < heapData[min].getRootKey())){
+        if ((_right < logSize) && (heapData[_right].getRootKey() < heapData[min].getRootKey()))
             min = _right;
-            //Swap values if necessary and continue fixing the heap towards the leaves:
-            if(min != nodeIndex){
-                swap(&heapData[nodeIndex], &heapData[min]);
-                fixHeap(min);
-            }
+        //Swap values if necessary and continue fixing the heap towards the leaves: TODO: Change comment
+        if (min != nodeIndex) {
+            swap(heapData[nodeIndex], heapData[min]);
+            fixHeap(min);
         }
     }
 
@@ -66,7 +65,8 @@ namespace DataQ2{
             cout << "There is no heapData left in the heap. There is no min value to delete." << endl;
             exit(1);
         }else{
-            HoffmanTree* min = heapData;
+            HoffmanTree* min = new HoffmanTree();
+            *min = *heapData;
             logSize--;
             heapData[0] = heapData[logSize];
             fixHeap(0);
@@ -82,7 +82,7 @@ namespace DataQ2{
         int i = logSize;
         logSize++;
 
-        while((i > 0) && (heapData[parent(i)].getRootKey() > item.getRootKey())){
+        while((i > 0) && (heapData[parent(i)].getRootKey() > item.getRootKey())){ // 15 > 8 ? V
             heapData[i] = heapData[parent(i)];
             i = parent(i);
         }
@@ -116,10 +116,10 @@ namespace DataQ2{
         return hoffmanTree;
     }
 
-    void swap(HoffmanTree* x, HoffmanTree* y){
-        HoffmanTree temp = *x;
-        *x = *y;
-        *y = temp;
+    void swap(HoffmanTree& x, HoffmanTree& y){
+        HoffmanTree temp = x;
+        x = y;
+        y = temp;
     }
 
 }

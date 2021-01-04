@@ -20,7 +20,7 @@ int main(){
 
     cout<<"please enter file name: "; cin>> fileName;
     readFile(fileName, BinarySearchTree);
-    MinHeap minHeap(BinarySearchTree, BinarySearchTree.getBinSearchTreeSize() );
+    MinHeap minHeap(BinarySearchTree);
     HoffmanTree* hoffmanTree = minHeap.buildHoffmanTree();
 
     hoffmanTree->printHoffmanTree();

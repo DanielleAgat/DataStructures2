@@ -46,9 +46,9 @@ namespace DataQ2 {
         BinSearchNode* parent = nullptr;
         BinSearchNode* newNode;
 
-        BinSearchNode* temp = find(parent,_key);
+        BinSearchNode* temp = find(_key);
         if (temp)
-            (temp->data.key)++;
+            (temp->data.frequency)++;
         else {
             temp = root;
             while (temp) {
@@ -61,7 +61,7 @@ namespace DataQ2 {
 
             newNode = new BinSearchNode();
             newNode->data.key = _key;
-            newNode->data.key = 1;
+            newNode->data.frequency = 1;
 
             if (!parent)
                 root = newNode;
@@ -69,9 +69,8 @@ namespace DataQ2 {
                 parent->right = newNode;
             else
                 parent->left = newNode;
-
-            logSize++;
         }
+        return root;
     }
 
     BinSearchNode* BinarySearchTree::findMin(BinSearchNode *t) {
