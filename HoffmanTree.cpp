@@ -139,7 +139,6 @@ namespace DataQ2{
         string s;
         if(root->left ==nullptr && root->right ==nullptr) //Only one node to tree, hence only one code
             s.append("1");
-
         cout << "Character encoding:" << endl;
         weight = print(root, weight, s);
         cout << "\nEncoded file weight: " << weight << " bits";
@@ -172,7 +171,7 @@ namespace DataQ2{
                 root = nullptr;
             else
                 root = copyHoffmanTree(toCopy.root);
-//                HoffTreeNode* copyNode = new HoffTreeNode();
+//                HoffTreeNode* copyNode = new HoffTreeNode(); TODO: Understand why copyNode is not recognized when removing root = copyHoffmanTree(toCopy.root); line
 //                copyNode->data = toCopy.root->data;
 //                copyNode->frequency = toCopy.root->frequency;
 //                copyNode->left = copyHoffmanTree(toCopy.root->left);
