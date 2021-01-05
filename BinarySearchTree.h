@@ -31,7 +31,7 @@ namespace DataQ2 {
 
         ///Inner methods:
         void makeEmpty(BinSearchNode* t);
-        BinSearchNode* insert(char _key, BinSearchNode* t);
+        BinSearchNode* insert(char _key);
         BinSearchNode* findMin(BinSearchNode* t);
         BinSearchNode* findMax(BinSearchNode* t);
         BinSearchNode* remove(Pair x, BinSearchNode* t);
@@ -47,7 +47,7 @@ namespace DataQ2 {
 
 
         ///Methods:
-        void insert(char x);
+        void insertV(char x);
         BinSearchNode* getRoot(){ return root; };
         void remove(Pair x);
         void display();

@@ -53,7 +53,7 @@ namespace DataQ2{
         }
         if ((_right < logSize) && (heapData[_right].getRootKey() < heapData[min].getRootKey()))
             min = _right;
-        //Swap values if necessary and continue fixing the heap towards the leaves: TODO: Change comment
+        //Swap values if necessary and continue fixing the heap towards the leaves:
         if (min != nodeIndex) {
             swap(heapData[nodeIndex], heapData[min]);
             fixHeap(min);
@@ -82,13 +82,14 @@ namespace DataQ2{
         int i = logSize;
         logSize++;
 
-        while((i > 0) && (heapData[parent(i)].getRootKey() > item.getRootKey())){ // 15 > 8 ? V
+        while((i > 0) && (heapData[parent(i)].getRootKey() > item.getRootKey())){
             heapData[i] = heapData[parent(i)];
             i = parent(i);
         }
         heapData[i] = item;
     }
 
+    //TODO: change
     void MinHeap::makeHeap(BinSearchNode* node){
         if (!node)
             return;

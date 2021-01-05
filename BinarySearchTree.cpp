@@ -13,7 +13,7 @@ namespace DataQ2 {
         data.frequency=_data.frequency;
         data.key=_data.key;
     }
-    BinSearchNode::~BinSearchNode() {}
+    BinSearchNode::~BinSearchNode() = default;
 
     BinarySearchTree::BinarySearchTree():root(nullptr),logSize(0){
     }
@@ -29,46 +29,32 @@ namespace DataQ2 {
         makeEmpty(t->left);
         makeEmpty(t->right);
         delete t;
-        logSize=0;
+        logSize = 0;
     }
-
-    BinSearchNode* BinarySearchTree::insert(char _key, BinSearchNode* t) {
-//        if (t == nullptr) { TODO
-//            t = new BinSearchNode(nullptr, nullptr, x);
-//        } else if (x.key < t->data.key)
-//            t->left = insert(x, t->left);
-//        else if (x.key > t->data.key)
-//            t->right = insert(x, t->right);
-//        return t;
-
-
-        //TreeNode* temp = root;TODO: Dor's comment
-        BinSearchNode* parent = nullptr;
-        BinSearchNode* newNode;
-
-        BinSearchNode* temp = find(_key);
-        if (temp)
-            (temp->data.frequency)++;
+    BinSearchNode* BinarySearchTree::insert(char _key) {
+        BinSearchNode* tmp = find(_key);
+        if (tmp) {
+            tmp->data.frequency++;
+        }
         else {
-            temp = root;
-            while (temp) {
-                parent = temp;
-                if (_key > temp->data.key)
-                    temp = temp->right;
-                else
-                    temp = temp->left;
-            }
-
-            newNode = new BinSearchNode();
-            newNode->data.key = _key;
+            tmp = root;
+            BinSearchNode* newNode= new BinSearchNode();
+            BinSearchNode* nodeParent = nullptr;
             newNode->data.frequency = 1;
-
-            if (!parent)
+            newNode->data.key = _key;
+            while (tmp!= nullptr) {
+                nodeParent = tmp;
+                if (tmp->data.key >=_key)
+                    tmp = tmp->left;
+                else
+                    tmp = tmp->right;
+            }
+            if (nodeParent== nullptr)
                 root = newNode;
-            else if (_key > parent->data.key)
-                parent->right = newNode;
+            else if (nodeParent->data.key>_key)
+                nodeParent->left = newNode;
             else
-                parent->left = newNode;
+                nodeParent->right = newNode;
         }
         return root;
     }
@@ -135,8 +121,8 @@ namespace DataQ2 {
             return t;
     }
 
-    void BinarySearchTree::insert(char x) {
-        root = insert(x, root);
+    void BinarySearchTree::insertV(char x) {
+        root = insert(x);
         logSize++;
     }
     void BinarySearchTree::remove(Pair x) {
