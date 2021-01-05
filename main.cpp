@@ -42,7 +42,7 @@ void readFile(string fileName, BinarySearchTree& BinarySearchTree) {
             cout << "Error reading" << endl;
             exit(-1);
         }
-        BinarySearchTree.insert(currC); //TODO: Consider search the char in the tree, and if find then insert to the returned node, else insert
+        BinarySearchTree.insert(currC); //TODO: Consider find the char in the tree, and if find then insert to the returned node, else insert
         infile.get(currC);
     }
     infile.close();
@@ -63,7 +63,7 @@ void readFile(string fileName, BinarySearchTree& BinarySearchTree) {
 //            cout << "Error reading" << endl;
 //            exit(-1);
 //        }
-//        BinarySearchTree.insert(currC); //TODO: Consider search the char in the tree, and if find then insert to the returned node, else insert
+//        BinarySearchTree.insert(currC); //TODO: Consider find the char in the tree, and if find then insert to the returned node, else insert
 //        infile.get(currC);
 //    }
 //    infile.close();
