@@ -163,6 +163,7 @@ namespace DataQ2{
             root->right = copyHoffmanTree(rightSubTree.getRoot());
     }
 
+    /*
     void HoffmanTree::printHoffmanTree() const{
         float weight = 0;
         string s;
@@ -172,21 +173,22 @@ namespace DataQ2{
         weight = print(root, weight, s);
         cout << "\nEncoded file weight: " << weight << " bits";
     }
+     */
 
 
-    float HoffmanTree::print(HoffTreeNode* node, float weight, string s)const{
+    float HoffmanTree::print(ostream& os,HoffTreeNode* node, float weight, string s)const{
         if(node->left != nullptr){ //Hoffman tree is always full tree, hence if there is no one son, there is no sons at all.
             string s1,s2;
             s1.assign(s);
             s2.assign(s);
-            float weight1 = print(node->left, weight,s1.append("0"));
-            float weight2 = print(node->right, weight, s2.append("1"));
+            float weight1 = print(os,node->left, weight,s1.append("0"));
+            float weight2 = print(os,node->right, weight, s2.append("1"));
             weight = weight1 + weight2;
         }else{
             if(node->data == ENTER)
-                cout << "\n'\\n' - " << s;
+                os << "\n'\\n' - " << s;
             else
-                cout << "\n'" << node->data << "' - " << s;
+                os << "\n'" << node->data << "' - " << s;
             weight += ((s.length()) * node->frequency);
         }
         return weight;
@@ -224,6 +226,16 @@ namespace DataQ2{
         if(root== nullptr)
             return true;
         return false;
+    }
+    ostream& operator<<(ostream& os, const HoffmanTree& hfTree){
+        float weight = 0;
+        string s;
+        if(hfTree.root->left ==nullptr && hfTree.root->right ==nullptr) //Only one node to tree, hence only one code
+            s.append("1");
+        os << "Character encoding:" << endl;
+        weight = hfTree.print(os,hfTree.root, weight, s);
+        os << "\nEncoded file weight: " << weight << " bits";
+        return os;
     }
 
 

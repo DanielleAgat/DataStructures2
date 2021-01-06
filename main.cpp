@@ -11,19 +11,17 @@
 
 using namespace std;
 using namespace DataQ2;
-
+//read data from file and create BinarySearchTree
 void readFile(string fileName, BinarySearchTree& BinarySearchTree);
-
-int main(){
+int main() {
     string fileName;
     BinarySearchTree BinarySearchTree;
-    cout<<"enter file name: ";
-    cin>> fileName;
-
+    cout << "enter file name: ";
+    cin >> fileName;
     readFile(fileName, BinarySearchTree);
     MinHeap minHeap(BinarySearchTree);
-    HoffmanTree* hoffmanTree = minHeap.buildHoffmanTree();
-    hoffmanTree->printHoffmanTree();
+    HoffmanTree *hoffmanTree = minHeap.buildHoffmanTree();
+    cout << *hoffmanTree<<endl;
 }
 
 void readFile(string fileName, BinarySearchTree& BinarySearchTree) {

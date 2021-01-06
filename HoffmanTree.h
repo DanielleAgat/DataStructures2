@@ -9,9 +9,10 @@ using namespace std;
 
 namespace DataQ2{
 #define ENTER '\n'
-
+    class HoffmanTree;
     class HoffTreeNode{
         friend class HoffmanTree;
+        friend ostream& operator<<(ostream& os, const HoffmanTree& hfTree);
         private:
         char data;
         float frequency;
@@ -36,6 +37,7 @@ namespace DataQ2{
     };
 
     class HoffmanTree{
+        friend ostream& operator<<(ostream& os, const HoffmanTree& hfTree);
     private:
         HoffTreeNode *root;
 
@@ -68,7 +70,7 @@ namespace DataQ2{
         bool isEmpty() const;
         void mergeTreesToHoffman(HoffmanTree& leftSubTree, HoffmanTree& rightSubTree);
         void printHoffmanTree() const;
-        float print(HoffTreeNode* node, float weight, string s)const;
+        float print(ostream& os,HoffTreeNode* node, float weight, string s)const;
         HoffTreeNode* copyHoffmanTree(const HoffTreeNode* toCopy);
 
         ///Print methods:
