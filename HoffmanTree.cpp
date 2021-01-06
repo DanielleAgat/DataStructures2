@@ -6,7 +6,46 @@
 #include "HoffmanTree.h"
 
 namespace DataQ2{
+    HoffTreeNode::HoffTreeNode() :data(0),frequency(0),left(nullptr),right(nullptr){
+    }
 
+    HoffTreeNode::HoffTreeNode(char _data, float _frequency) :data(_data),frequency(_frequency),left(nullptr),right(nullptr){
+    }
+
+    HoffTreeNode::HoffTreeNode(const HoffTreeNode& toCopy)
+        :data(toCopy.data), frequency(toCopy.frequency),left(nullptr),right(nullptr){
+      *this = toCopy;
+    }
+
+    HoffTreeNode::~HoffTreeNode(){
+    }
+
+    bool HoffTreeNode::setData(char _data) {
+        data = _data;
+        return true;
+    }
+
+    bool HoffTreeNode::setFrequency(float _frequency) {
+        frequency = _frequency;
+        return true;
+    }
+
+    HoffTreeNode& HoffTreeNode::operator=(const HoffTreeNode& toCopy){
+        if (this != &toCopy){
+            HoffTreeNode copyNode;
+            data = toCopy.data;
+            frequency = toCopy.frequency;
+            if(toCopy.left != nullptr) { //Hoffman is always full, hence, it is enough to check only for left son.
+                left = new HoffTreeNode(*toCopy.left);
+                right = new HoffTreeNode(*toCopy.right);
+            }
+            else{
+                left = nullptr;
+                right = nullptr;
+            }
+        }
+        return *this;
+    }
 
     HoffmanTree::HoffmanTree(){
         root = nullptr;
@@ -20,37 +59,36 @@ namespace DataQ2{
         make_empty();
     }
 
+    void HoffmanTree::make_empty(){
+        make_empty(root);
+    }
+
     void HoffmanTree::make_empty(HoffTreeNode *leaf){
-        if(leaf != nullptr){
-            make_empty(leaf->left);
-            make_empty(leaf->right);
-            delete leaf;
-        }
+        if (leaf == nullptr)
+            return;
+
+        make_empty(leaf->left);
+        make_empty(leaf->right);
+        delete leaf;
+    }
+
+    bool HoffmanTree::isEmpty(){
+        return root == nullptr;
     }
 
     void HoffmanTree::insert(float key, char _data, HoffTreeNode *leaf){
         if(key < leaf->frequency){
-            if(leaf->left != nullptr){
+            if(leaf->left != nullptr)
                 insert(key,_data, leaf->left);
-            }else{
-                leaf->left = new HoffTreeNode;
-                leaf->left->frequency = key;
-                leaf->left->data = _data;
-                leaf->left->left = nullptr;
-                leaf->left->right = nullptr;
-            }
-        }else if(key >= leaf->frequency){
-            if(leaf->right != nullptr){
-                insert(key,_data, leaf->right);
-            }else{
-                leaf->right = new HoffTreeNode;
-                leaf->right->frequency = key;
-                leaf->right->data = _data;
-                leaf->right->right = nullptr;
-                leaf->right->left = nullptr;
-            }
-        }
+            else
+                leaf->left = new HoffTreeNode(_data,key);
 
+        }else if(key >= leaf->frequency){
+            if(leaf->right != nullptr)
+                insert(key,_data, leaf->right);
+            else
+                leaf->right = new HoffTreeNode(_data,key);
+        }
     }
 
     void HoffmanTree::insert(float key, char _data){
@@ -84,9 +122,6 @@ namespace DataQ2{
         return find(key, root);
     }
 
-    void HoffmanTree::make_empty(){
-        make_empty(root);
-    }
 
     void HoffmanTree::inorder(){
         inorder(root);
@@ -169,15 +204,14 @@ namespace DataQ2{
                 make_empty();
             if (toCopy.root == nullptr)
                 root = nullptr;
-            else
-                root = copyHoffmanTree(toCopy.root);
-//                HoffTreeNode* copyNode = new HoffTreeNode(); TODO: Understand why copyNode is not recognized when removing root = copyHoffmanTree(toCopy.root); line
-//                copyNode->data = toCopy.root->data;
-//                copyNode->frequency = toCopy.root->frequency;
-//                copyNode->left = copyHoffmanTree(toCopy.root->left);
-//                copyNode->right = copyHoffmanTree(toCopy.root->right);
-//                root = copyNode;
-
+            else{
+                HoffTreeNode* copyNode = new HoffTreeNode();
+                copyNode->data = toCopy.root->data;
+                copyNode->frequency = toCopy.root->frequency;
+                copyNode->left = copyHoffmanTree(toCopy.root->left);
+                copyNode->right = copyHoffmanTree(toCopy.root->right);
+                root = copyNode;
+            }
         }
         return *this;
     }
@@ -186,9 +220,7 @@ namespace DataQ2{
     HoffTreeNode* HoffmanTree::copyHoffmanTree(const HoffTreeNode* toCopy){
         if (toCopy == nullptr)
             return nullptr;
-        HoffTreeNode* copyNode = new HoffTreeNode;
-        copyNode->data = toCopy->data;
-        copyNode->frequency = toCopy->frequency;
+        HoffTreeNode* copyNode = new HoffTreeNode(toCopy->data,toCopy->frequency);
         copyNode->left = copyHoffmanTree(toCopy->left);
         copyNode->right = copyHoffmanTree(toCopy->right);
         return copyNode;

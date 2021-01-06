@@ -10,21 +10,42 @@ using namespace std;
 namespace DataQ2{
 #define ENTER '\n'
 
-    struct HoffTreeNode{
+    class HoffTreeNode{
+        friend class HoffmanTree;
+        private:
         char data;
         float frequency;
         HoffTreeNode *left;
         HoffTreeNode *right;
+
+    public:
+        ///Constructors & destructors:
+        HoffTreeNode();
+        HoffTreeNode(char _data, float _frequency);
+        HoffTreeNode(const HoffTreeNode& toCopy);
+        ~HoffTreeNode();
+
+        ///Getters & setters:
+        char getData() const { return data; };
+        float getFrequency() const { return frequency; };
+        bool setData(char _data);
+        bool setFrequency(float _frequency);
+
+        ///Overriding operators:
+        HoffTreeNode& operator=(const HoffTreeNode& toCopy);
     };
 
     class HoffmanTree{
     private:
         HoffTreeNode *root;
 
-        ///Methods:
+        ///Inner Methods:
         void make_empty(HoffTreeNode *leaf);
+        bool isEmpty();
         void insert(float key, char _data, HoffTreeNode *leaf);
         HoffTreeNode* find(float key, HoffTreeNode *leaf);
+
+        //Print methods:
         void inorder(HoffTreeNode *leaf);
         void postorder(HoffTreeNode *leaf);
         void preorder(HoffTreeNode *leaf);
