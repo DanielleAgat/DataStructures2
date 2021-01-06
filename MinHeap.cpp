@@ -24,6 +24,26 @@ namespace DataQ2{
             fixHeap(i);
     }
 
+    MinHeap::MinHeap(const MinHeap &toCopy) {
+        *this=toCopy;
+    }
+
+    MinHeap &MinHeap::operator=(const MinHeap &toCopy) {
+        if (this != &toCopy) {
+            if(isEmpty()){
+               makeEmpty();
+            }
+            logSize = toCopy.logSize;
+            isAllocated = toCopy.isAllocated;
+            phySize = toCopy.phySize;
+            HoffmanTree *tmp = new HoffmanTree[toCopy.phySize];
+            for (int i = 0; i < logSize; i++) {
+                tmp[i] = toCopy.heapData[i];
+            }
+            heapData = tmp;
+        }
+        return *this;
+    }
     MinHeap::~MinHeap(){
         if(isAllocated)
             delete[] heapData;
@@ -133,6 +153,9 @@ namespace DataQ2{
             return min;
         }
     }
+
+
+
     void swap(HoffmanTree& x, HoffmanTree& y){
         HoffmanTree temp = x;
         x = y;

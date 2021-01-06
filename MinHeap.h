@@ -27,6 +27,8 @@ namespace DataQ2{
         ///Constructors & Destructors:
         //Allocate memory for the heap and make the heap empty.
         MinHeap(int _phySize);
+        //copy ctor
+        MinHeap(const MinHeap& toCopy);
         //turns arr of frequencies and chars into min heap.
         MinHeap(HoffmanTree arr[],int size);
         //turns binarySearchTree into min heap.
@@ -49,6 +51,9 @@ namespace DataQ2{
         void makeHeap(BinSearchNode* node);
         //Build HoffManTree as learned in class.
         HoffmanTree* buildHoffmanTree();
+
+        ///Overriding operators:
+        MinHeap& operator=(const MinHeap& toCopy);
     };
     //swap 2 hoffmanTrees
     void swap(HoffmanTree& x, HoffmanTree& y);
