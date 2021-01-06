@@ -107,7 +107,7 @@ namespace DataQ2{
             HoffmanTree *t1 = deleteMin();
             HoffmanTree *t2 = deleteMin();
             HoffmanTree *t3 = new HoffmanTree();
-            t3->addSons(*t1, *t2);
+            t3->mergeTreesToHoffman(*t1, *t2);
             insert(*t3);
         }
         hfTree = deleteMin();
