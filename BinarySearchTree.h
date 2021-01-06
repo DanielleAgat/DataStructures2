@@ -18,10 +18,25 @@ namespace DataQ2 {
         Pair data;
         BinSearchNode* left;
         BinSearchNode* right;
+
+        ///Inner methods:
+        //Inner method: return an array of pair according to the binary search tree (inorder).
+        void makeDataArrHelper(Pair* arr,const BinSearchNode *t,int& i)const;
+
     public:
+        ///Constructors & Destructors:
         BinSearchNode();
         BinSearchNode(BinSearchNode* _right, BinSearchNode* _left, Pair _data);
         ~BinSearchNode();
+
+        ///Getters:
+        char getKey() const { return data.key; };
+        float getFrequency() const { return data.frequency; };
+
+        ///Methods:
+        //This method return an array of pair according to the binary search tree (inorder).
+        Pair* makeDataArr(int phySize,int& logSize)const;
+
     };
     class BinarySearchTree {
         friend class MinHeap;
@@ -30,29 +45,26 @@ namespace DataQ2 {
         int logSize;
 
         ///Inner methods:
-        //This method returns 'true' if the tree is empty ; 'false' otherwise
-
-
         //Inner method: frees all tree's memory and leaves the root as nullptr
         void makeEmpty(BinSearchNode* t);
 
         //Inner method: inserts a node to the tree in the right place
-        BinSearchNode* insert(char _key, BinSearchNode* t);
+        BinSearchNode* insert(char _key);
 
         //Inner method: returns the min BinSearchNode in the tree (which is the most left node)
-        BinSearchNode* findMin(BinSearchNode* t);
+        BinSearchNode* findMin(BinSearchNode* t)const;
 
         //Inner method: returns the min BinSearchNode in the tree (which is the most right node)
-        BinSearchNode* findMax(BinSearchNode* t);
+        BinSearchNode* findMax(BinSearchNode* t)const;
 
         //Inner method: deletes the node with the given data in the tree (if exist).
         BinSearchNode* remove(Pair x, BinSearchNode* t);
 
         //Inner method: prints the tree's data inorder.
-        void inorder(BinSearchNode* t);
+        void inorder(const BinSearchNode* t)const;
 
         //Inner method: returns the BinSearchNode* with the given key ; returns nullptr if the key is not exist in the tree.
-        BinSearchNode* find(BinSearchNode* t, char x);
+        BinSearchNode* find(BinSearchNode* t, char x)const;
 
     public:
         ///Constructors & Destructors:
@@ -65,16 +77,22 @@ namespace DataQ2 {
 
 
         ///Methods:
+        //This method frees all tree's memory and leaves the root as nullptr
+        void makeEmpty();
+
+        //This method returns 'true' if the tree is empty ; 'false' otherwise
+        bool isEmpty() const;
+
         //This method inserts a node to the tree in the right place.
-        void insert(char x);
+        void insertV(char x);
 
         //This method deletes the node with the given data in the tree (if exist).
         void remove(Pair x);
 
         //This method prints the tree's data inorder.
-        void printBinarySearchTree();
+        void printBinarySearchTree()const;
 
         //This method returns the BinSearchNode* with the given key ; returns nullptr if the key is not exist in the tree.
-        BinSearchNode* find(char x);
+        BinSearchNode* find(char x)const;
     };
 }

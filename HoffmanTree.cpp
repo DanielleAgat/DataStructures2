@@ -17,8 +17,7 @@ namespace DataQ2{
       *this = toCopy;
     }
 
-    HoffTreeNode::~HoffTreeNode(){
-    }
+    HoffTreeNode::~HoffTreeNode() = default;
 
     bool HoffTreeNode::setData(char _data) {
         data = _data;
@@ -56,24 +55,15 @@ namespace DataQ2{
     }
 
     HoffmanTree::~HoffmanTree(){
-        make_empty();
+        makeEmpty();
     }
 
-    void HoffmanTree::make_empty(){
-        make_empty(root);
-    }
-
-    void HoffmanTree::make_empty(HoffTreeNode *leaf){
-        if (leaf == nullptr)
-            return;
-
-        make_empty(leaf->left);
-        make_empty(leaf->right);
-        delete leaf;
-    }
-
-    bool HoffmanTree::isEmpty(){
-        return root == nullptr;
+    void HoffmanTree::makeEmpty(HoffTreeNode *leaf){
+        if(leaf != nullptr){
+            makeEmpty(leaf->left);
+            makeEmpty(leaf->right);
+            delete leaf;
+        }
     }
 
     void HoffmanTree::insert(float key, char _data, HoffTreeNode *leaf){
@@ -103,7 +93,7 @@ namespace DataQ2{
         }
     }
 
-    HoffTreeNode *HoffmanTree::find(float key, HoffTreeNode *leaf){
+    HoffTreeNode *HoffmanTree::find(float key, HoffTreeNode *leaf)const{
         if(leaf != nullptr){
             if(key == leaf->frequency){
                 return leaf;
@@ -122,13 +112,16 @@ namespace DataQ2{
         return find(key, root);
     }
 
+    void HoffmanTree::makeEmpty(){
+        makeEmpty(root);
+    }
 
-    void HoffmanTree::inorder(){
+    void HoffmanTree::inorder()const{
         inorder(root);
         cout << "\n";
     }
 
-    void HoffmanTree::inorder(HoffTreeNode *leaf){
+    void HoffmanTree::inorder(HoffTreeNode *leaf)const{
         if(leaf != nullptr){
             inorder(leaf->left);
             cout << leaf->data << ",";
@@ -136,12 +129,12 @@ namespace DataQ2{
         }
     }
 
-    void HoffmanTree::postorder(){
+    void HoffmanTree::postorder()const{
         postorder(root);
         cout << "\n";
     }
 
-    void HoffmanTree::postorder(HoffTreeNode *leaf){
+    void HoffmanTree::postorder(HoffTreeNode *leaf)const{
         if(leaf != nullptr){
             inorder(leaf->left);
             inorder(leaf->right);
@@ -149,12 +142,12 @@ namespace DataQ2{
         }
     }
 
-    void HoffmanTree::preorder(){
+    void HoffmanTree::preorder()const{
         preorder(root);
         cout << "\n";
     }
 
-    void HoffmanTree::preorder(HoffTreeNode* leaf){
+    void HoffmanTree::preorder(HoffTreeNode* leaf)const{
         if(leaf != nullptr){
             cout << leaf->data << ",";
             inorder(leaf->left);
@@ -169,30 +162,19 @@ namespace DataQ2{
             root->right = copyHoffmanTree(rightSubTree.getRoot());
     }
 
-    void HoffmanTree::printHoffmanTree() const{
-        float weight = 0;
-        string s;
-        if(root->left ==nullptr && root->right ==nullptr) //Only one node to tree, hence only one code
-            s.append("1");
-        cout << "Character encoding:" << endl;
-        weight = printHoffmanTree(root, weight, s);
-        cout << "\nEncoded file weight: " << weight << " bits";
-    }
-
-
-    float HoffmanTree::printHoffmanTree(HoffTreeNode* node, float weight, string s)const{
+    float HoffmanTree::printHoffmanTree(ostream& os,HoffTreeNode* node, float weight, string s)const{
         if(node->left != nullptr){ //Hoffman tree is always full tree, hence if there is no one son, there is no sons at all.
             string s1,s2;
             s1.assign(s);
             s2.assign(s);
-            float weight1 = printHoffmanTree(node->left, weight,s1.append("0"));
-            float weight2 = printHoffmanTree(node->right, weight, s2.append("1"));
+            float weight1 = printHoffmanTree(os,node->left, weight,s1.append("0"));
+            float weight2 = printHoffmanTree(os,node->right, weight, s2.append("1"));
             weight = weight1 + weight2;
         }else{
             if(node->data == ENTER)
-                cout << "\n'\\n' - " << s;
+                os << "\n'\\n' - " << s;
             else
-                cout << "\n'" << node->data << "' - " << s;
+                os << "\n'" << node->data << "' - " << s;
             weight += ((s.length()) * node->frequency);
         }
         return weight;
@@ -201,7 +183,7 @@ namespace DataQ2{
     HoffmanTree& HoffmanTree::operator=(const HoffmanTree& toCopy){
         if (this != &toCopy){
             if (root != nullptr)
-                make_empty();
+                makeEmpty();
             if (toCopy.root == nullptr)
                 root = nullptr;
             else{
@@ -217,7 +199,7 @@ namespace DataQ2{
     }
 
 
-    HoffTreeNode* HoffmanTree::copyHoffmanTree(const HoffTreeNode* toCopy){
+    HoffTreeNode* HoffmanTree::copyHoffmanTree(const HoffTreeNode* toCopy) const{
         if (toCopy == nullptr)
             return nullptr;
         HoffTreeNode* copyNode = new HoffTreeNode(toCopy->data,toCopy->frequency);
@@ -225,5 +207,22 @@ namespace DataQ2{
         copyNode->right = copyHoffmanTree(toCopy->right);
         return copyNode;
     }
+
+    bool HoffmanTree::isEmpty() const {
+        if(root== nullptr)
+            return true;
+        return false;
+    }
+    ostream& operator<<(ostream& os, const HoffmanTree& hfTree){
+        float weight = 0;
+        string s;
+        if(hfTree.root->left ==nullptr && hfTree.root->right ==nullptr) //Only one node to tree, hence only one code
+            s.append("1");
+        os << "Character encoding:" << endl;
+        weight = hfTree.printHoffmanTree(os,hfTree.root, weight, s);
+        os << "\nEncoded file weight: " << weight << " bits";
+        return os;
+    }
+
 
 }

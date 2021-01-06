@@ -11,20 +11,17 @@
 
 using namespace std;
 using namespace DataQ2;
-
+//read data from file and create BinarySearchTree
 void readFile(string fileName, BinarySearchTree& BinarySearchTree);
-
-int main(){
-    BinarySearchTree BinarySearchTree;
+int main() {
     string fileName;
-
-    cout<<"please enter file name: "; cin>> fileName;
+    BinarySearchTree BinarySearchTree;
+    cout << "enter file name: ";
+    cin >> fileName;
     readFile(fileName, BinarySearchTree);
     MinHeap minHeap(BinarySearchTree);
-    HoffmanTree* hoffmanTree = minHeap.buildHoffmanTree();
-
-    hoffmanTree->printHoffmanTree();
-    cout<<endl;
+    HoffmanTree *hoffmanTree = minHeap.buildHoffmanTree();
+    cout << *hoffmanTree<<endl;
 }
 
 void readFile(string fileName, BinarySearchTree& BinarySearchTree) {
@@ -32,42 +29,19 @@ void readFile(string fileName, BinarySearchTree& BinarySearchTree) {
     ifstream infile(fileName);
 
     if (!infile) {
-        cout << "Error with infile" << endl;
-        exit(-1);
+        cout << "invalid input" << endl;
+        exit(1);
     }
-
     infile.get(currC);
     while (!infile.eof()) {
         if (infile.eof()) {
-            cout << "Error reading" << endl;
-            exit(-1);
+            cout << "invalid input"<< endl;
+            exit(1);
         }
-        BinarySearchTree.insert(currC); //TODO: Consider find the char in the tree, and if find then insert to the returned node, else insert
+        BinarySearchTree.insertV(currC);
         infile.get(currC);
     }
     infile.close();
-
-
-
-//    char currC;
-//    ifstream infile(fileName);
-//
-//    if (!infile) {
-//        cout << "Error with infile" << endl;
-//        exit(-1);
-//    }
-//
-//    infile.get(currC);
-//    while (!infile.eof()) {
-//        if (infile.eof()) {
-//            cout << "Error reading" << endl;
-//            exit(-1);
-//        }
-//        BinarySearchTree.insert(currC); //TODO: Consider find the char in the tree, and if find then insert to the returned node, else insert
-//        infile.get(currC);
-//    }
-//    infile.close();
-
 }
 
    
