@@ -20,7 +20,7 @@ namespace DataQ2{
         HoffTreeNode *root;
 
         ///Methods:
-        void make_empty(HoffTreeNode *leaf);
+        void makeEmpty(HoffTreeNode *leaf);
         void insert(float key, char _data, HoffTreeNode *leaf);
         HoffTreeNode *search(float key, HoffTreeNode *leaf);
         void inorder_print(HoffTreeNode *leaf);
@@ -41,7 +41,8 @@ namespace DataQ2{
         ///Methods:
         void insert(float key,char _data);
         HoffTreeNode *search(float key);
-        void make_empty();
+        void makeEmpty();
+        bool isEmpty() const;
         void inorder_print();
         void postorder_print();
         void preorder_print();

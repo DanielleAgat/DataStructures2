@@ -27,7 +27,9 @@ namespace DataQ2{
         ~MinHeap();
 
         ///Methods:
-        HoffmanTree min();
+        HoffmanTree* min();
+        void makeEmpty();
+        bool isEmpty() const;
         HoffmanTree* deleteMin();
         void insert(HoffmanTree item);
         void makeHeap(BinSearchNode* node);

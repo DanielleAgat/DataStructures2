@@ -22,6 +22,8 @@ namespace DataQ2 {
         BinSearchNode();
         BinSearchNode(BinSearchNode* _right, BinSearchNode* _left, Pair _data);
         ~BinSearchNode();
+        Pair* makeDataArr(int phySize,int&logSize);
+        void makeDataArrHelper(Pair* arr,BinSearchNode *t,int& i);
     };
     class BinarySearchTree {
         friend class MinHeap;
@@ -37,6 +39,7 @@ namespace DataQ2 {
         BinSearchNode* remove(Pair x, BinSearchNode* t);
         void inorder(BinSearchNode* t);
         BinSearchNode* find(BinSearchNode* t, char x);
+
     public:
         ///Constructors & Destructors:
         BinarySearchTree();
@@ -47,6 +50,8 @@ namespace DataQ2 {
 
 
         ///Methods:
+        void makeEmpty();
+        bool isEmpty() const;
         void insertV(char x);
         BinSearchNode* getRoot(){ return root; };
         void remove(Pair x);

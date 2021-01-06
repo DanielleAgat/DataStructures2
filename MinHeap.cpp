@@ -62,7 +62,7 @@ namespace DataQ2{
 
     HoffmanTree* MinHeap::deleteMin() {
         if(logSize < 1){
-            cout << "There is no heapData left in the heap. There is no min value to delete." << endl;
+            cout << "invalid input" << endl;
             exit(1);
         }else{
             HoffmanTree* min = new HoffmanTree();
@@ -76,7 +76,7 @@ namespace DataQ2{
 
     void MinHeap::insert(HoffmanTree item) {
         if(logSize == phySize){
-            cout << "Heap is full! Cannot add heapData anymore" << endl;
+            cout << "invalid input" << endl;
             exit(1);
         }
         int i = logSize;
@@ -89,34 +89,51 @@ namespace DataQ2{
         heapData[i] = item;
     }
 
-    //TODO: change
     void MinHeap::makeHeap(BinSearchNode* node){
-        if (!node)
-            return;
-        makeHeap(node->left);
-        HoffmanTree HoffmanTree;
-        HoffmanTree.insert(node->data.frequency, node->data.key);
-        insert(HoffmanTree);
-        makeHeap(node->right);
-    }
-
-    HoffmanTree* MinHeap::buildHoffmanTree(){
-        HoffmanTree* hoffmanTree;
-        if(logSize == 1)
-            hoffmanTree = deleteMin();
-        else{
-            while(logSize>1){
-                HoffmanTree* t1 = deleteMin();
-                HoffmanTree* t2 = deleteMin();
-                HoffmanTree* t3 = new HoffmanTree();
-                t3->addSons(*t1, *t2);
-                insert(*t3);
-            }
-            hoffmanTree = deleteMin();
+        Pair* heapArr=node->makeDataArr(phySize,logSize);
+        for(int i=0;i<logSize;i++){
+            HoffmanTree HoffmanTree;
+            HoffmanTree.insert(heapArr[i].frequency, heapArr[i].key);
+            heapData[i]=HoffmanTree;
         }
-        return hoffmanTree;
+        for(int i=logSize/2-1;i>=0;i--){ // floyd.
+            fixHeap(i);
+        }
     }
 
+    HoffmanTree* MinHeap::buildHoffmanTree() {
+        HoffmanTree *hfTree;
+        while (logSize > 1) {
+            HoffmanTree *t1 = deleteMin();
+            HoffmanTree *t2 = deleteMin();
+            HoffmanTree *t3 = new HoffmanTree();
+            t3->addSons(*t1, *t2);
+            insert(*t3);
+        }
+        hfTree = deleteMin();
+        return hfTree;
+    }
+
+    bool MinHeap::isEmpty() const {
+        if (logSize == 0)
+            return true;
+        return false;
+    }
+
+    void MinHeap::makeEmpty() {
+        logSize=0;
+    }
+
+    HoffmanTree* MinHeap::min() {
+        if (logSize < 1) {
+            cout << "invalid input" << endl;
+            exit(1);
+        } else {
+            HoffmanTree *min = new HoffmanTree();
+            *min = *heapData;
+            return min;
+        }
+    }
     void swap(HoffmanTree& x, HoffmanTree& y){
         HoffmanTree temp = x;
         x = y;

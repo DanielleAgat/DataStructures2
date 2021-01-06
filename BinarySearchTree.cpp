@@ -138,4 +138,29 @@ namespace DataQ2 {
     BinSearchNode* BinarySearchTree::find(char x) {
         return find(root, x);
     }
+
+    void BinarySearchTree::makeEmpty() {
+        makeEmpty(root);
+    }
+
+    bool BinarySearchTree::isEmpty() const {
+        if(logSize==0)
+            return true;
+        return false;
+    }
+
+    Pair *BinSearchNode::makeDataArr(int phySize,int& logSize) {
+        Pair* arr=new Pair [phySize];
+        makeDataArrHelper(arr,this,logSize);
+        return arr;
+    }
+
+    void BinSearchNode::makeDataArrHelper(Pair* arr,BinSearchNode *t,int& i) {
+        if (t == nullptr)
+            return;
+        makeDataArrHelper(arr,t->left,i);
+        arr[i]=t->data;
+        i++;
+        makeDataArrHelper(arr,t->right,i);
+    }
 }

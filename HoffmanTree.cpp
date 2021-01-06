@@ -17,13 +17,13 @@ namespace DataQ2{
     }
 
     HoffmanTree::~HoffmanTree(){
-        make_empty();
+        makeEmpty();
     }
 
-    void HoffmanTree::make_empty(HoffTreeNode *leaf){
+    void HoffmanTree::makeEmpty(HoffTreeNode *leaf){
         if(leaf != nullptr){
-            make_empty(leaf->left);
-            make_empty(leaf->right);
+            makeEmpty(leaf->left);
+            makeEmpty(leaf->right);
             delete leaf;
         }
     }
@@ -84,8 +84,8 @@ namespace DataQ2{
         return search(key, root);
     }
 
-    void HoffmanTree::make_empty(){
-        make_empty(root);
+    void HoffmanTree::makeEmpty(){
+        makeEmpty(root);
     }
 
     void HoffmanTree::inorder_print(){
@@ -161,7 +161,7 @@ namespace DataQ2{
     HoffmanTree& HoffmanTree::operator=(const HoffmanTree& otherTree){
         if (this != &otherTree){
             if (root != nullptr)
-                make_empty();
+                makeEmpty();
             if (otherTree.root == nullptr)
                 root = nullptr;
             else
@@ -182,6 +182,11 @@ namespace DataQ2{
         return copyNode;
     }
 
+    bool HoffmanTree::isEmpty() const {
+        if(root== nullptr)
+            return true;
+        return false;
+    }
 
 
 }
