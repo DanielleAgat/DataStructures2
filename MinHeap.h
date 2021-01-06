@@ -50,7 +50,6 @@ namespace DataQ2{
         //Build HoffManTree as learned in class.
         HoffmanTree* buildHoffmanTree();
     };
-
     //swap 2 hoffmanTrees
     void swap(HoffmanTree& x, HoffmanTree& y);
 }

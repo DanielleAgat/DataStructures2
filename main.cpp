@@ -12,7 +12,7 @@
 using namespace std;
 using namespace DataQ2;
 //read data from file and create BinarySearchTree
-void readFile(string fileName, BinarySearchTree& BinarySearchTree);
+void readFile(const string& fileName, BinarySearchTree& BinarySearchTree);
 int main() {
     string fileName;
     BinarySearchTree BinarySearchTree;
@@ -24,7 +24,7 @@ int main() {
     cout << *hoffmanTree<<endl;
 }
 
-void readFile(string fileName, BinarySearchTree& BinarySearchTree) {
+void readFile(const string& fileName, BinarySearchTree& BinarySearchTree) {
     char currC;
     ifstream infile(fileName);
 

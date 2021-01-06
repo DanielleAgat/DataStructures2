@@ -6,8 +6,7 @@
 #include "MinHeap.h"
 
 namespace DataQ2{
-    MinHeap::MinHeap(int _phySize){
-        phySize = _phySize;
+    MinHeap::MinHeap(int _phySize):phySize(_phySize){
         heapData = new HoffmanTree[phySize];
         logSize = 0;
         isAllocated = true;

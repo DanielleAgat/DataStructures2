@@ -26,6 +26,7 @@ namespace DataQ2 {
     public:
         ///Constructors & Destructors:
         BinSearchNode();
+        BinSearchNode(const BinSearchNode* toCopy);
         BinSearchNode(BinSearchNode* _right, BinSearchNode* _left, Pair _data);
         ~BinSearchNode();
 
@@ -36,6 +37,9 @@ namespace DataQ2 {
         ///Methods:
         //This method return an array of pair according to the binary search tree (inorder).
         Pair* makeDataArr(int phySize,int& logSize)const;
+
+        ///Overriding operators:
+        BinSearchNode& operator=(const BinSearchNode& toCopy);
 
     };
     class BinarySearchTree {
@@ -69,6 +73,7 @@ namespace DataQ2 {
     public:
         ///Constructors & Destructors:
         BinarySearchTree();
+        BinarySearchTree(const BinarySearchTree& t);
         ~BinarySearchTree();
 
         ///Getters & Setters:
@@ -94,5 +99,12 @@ namespace DataQ2 {
 
         //This method returns the BinSearchNode* with the given key ; returns nullptr if the key is not exist in the tree.
         BinSearchNode* find(char x)const;
+
+        //copy binary search tree
+        BinSearchNode* copyBinarySearchTree(const BinSearchNode* toCopy) const;
+
+        ///Overriding operators:
+        BinarySearchTree& operator=(const BinarySearchTree& toCopy);
+
     };
 }
