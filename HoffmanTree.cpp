@@ -175,18 +175,18 @@ namespace DataQ2{
         if(root->left ==nullptr && root->right ==nullptr) //Only one node to tree, hence only one code
             s.append("1");
         cout << "Character encoding:" << endl;
-        weight = print(root, weight, s);
+        weight = printHoffmanTree(root, weight, s);
         cout << "\nEncoded file weight: " << weight << " bits";
     }
 
 
-    float HoffmanTree::print(HoffTreeNode* node, float weight, string s)const{
+    float HoffmanTree::printHoffmanTree(HoffTreeNode* node, float weight, string s)const{
         if(node->left != nullptr){ //Hoffman tree is always full tree, hence if there is no one son, there is no sons at all.
             string s1,s2;
             s1.assign(s);
             s2.assign(s);
-            float weight1 = print(node->left, weight,s1.append("0"));
-            float weight2 = print(node->right, weight, s2.append("1"));
+            float weight1 = printHoffmanTree(node->left, weight,s1.append("0"));
+            float weight2 = printHoffmanTree(node->right, weight, s2.append("1"));
             weight = weight1 + weight2;
         }else{
             if(node->data == ENTER)
@@ -225,7 +225,5 @@ namespace DataQ2{
         copyNode->right = copyHoffmanTree(toCopy->right);
         return copyNode;
     }
-
-
 
 }

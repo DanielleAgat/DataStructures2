@@ -144,7 +144,7 @@ namespace DataQ2 {
         logSize--;
     }
 
-    void BinarySearchTree::display(){
+    void BinarySearchTree::printBinarySearchTree(){
         inorder(root);
         cout << endl;
     }
