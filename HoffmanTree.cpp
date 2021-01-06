@@ -173,6 +173,8 @@ namespace DataQ2{
         }else{
             if(node->data == ENTER)
                 os << "\n'\\n' - " << s;
+            else if(node->data == TAB)
+                os << "\n'\\t' - " << s;
             else
                 os << "\n'" << node->data << "' - " << s;
             weight += ((s.length()) * node->frequency);

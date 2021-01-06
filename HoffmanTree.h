@@ -9,6 +9,7 @@ using namespace std;
 
 namespace DataQ2{
 #define ENTER '\n'
+#define TAB '\t'
     class HoffmanTree;
     class HoffTreeNode{
         friend class HoffmanTree;
