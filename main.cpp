@@ -38,7 +38,7 @@ void readFile(string fileName, BinarySearchTree& BinarySearchTree) {
             cout << "invalid input"<< endl;
             exit(1);
         }
-        BinarySearchTree.insertV(currC); //TODO: Consider find the char in the tree, and if find then insert to the returned node, else insert
+        BinarySearchTree.insertV(currC);
         infile.get(currC);
     }
     infile.close();
